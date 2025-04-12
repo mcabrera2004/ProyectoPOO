@@ -1,0 +1,36 @@
+# Archivos de compilación
+*.class
+*.jar
+*.war
+*.ear
+
+# Directorios generados por Maven y Gradle
+target/
+build/
+
+# Configuraciones específicas de IntelliJ IDEA
+.idea/
+*.iml
+
+# Configuraciones específicas de Eclipse
+.project
+.classpath
+.settings/
+
+# Configuraciones específicas de NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+*.nb-gradle/
+
+# Configuraciones específicas de VSCode
+.vscode/
+
+# Logs y archivos del sistema
+*.log
+.DS_Store
+Thumbs.db
+
+# Otras configuraciones específicas de Java
+*.config
