@@ -7,6 +7,8 @@
 # Directorios generados por Maven y Gradle
 target/
 build/
+bin/
+out/
 
 # Configuraciones específicas de IntelliJ IDEA
 .idea/
@@ -31,6 +33,11 @@ dist/
 *.log
 .DS_Store
 Thumbs.db
+
+# Archivos temporales y de respaldo
+*~
+*.swp
+*.tmp
 
 # Otras configuraciones específicas de Java
 *.config
