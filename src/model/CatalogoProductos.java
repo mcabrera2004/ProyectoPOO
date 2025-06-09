@@ -30,5 +30,14 @@ public class CatalogoProductos {
         }
         return productosConStockMinimo;
     }
-}
 
+    // Busca un producto por su código
+    public Producto buscarPorCodigo(String codigo) {
+        for (Producto p : productos) {
+            if (p.getCodigo().equals(codigo)) {
+                return p;
+            }
+        }
+        return null;
+    }
+}

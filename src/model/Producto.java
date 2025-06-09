@@ -38,6 +38,21 @@ public class Producto {
     public double getPrecioUnitario() {
         return precioUnitario;
     }
+
+    // Getter para el código
+    public String getCodigo() {
+        return codigo;
+    }
+
+    // Getter para la cantidad de stock actual
+    public int getCantidadStock() {
+        return cantidadStock;
+    }
+
+    // Getter para el stock mínimo
+    public int getStockMinimo() {
+        return stockMinimo;
+    }
     
     @Override
     public String toString() {
@@ -48,4 +63,3 @@ public class Producto {
             " | Stock mínimo: " + stockMinimo;
     }
 }
-

@@ -290,7 +290,7 @@ public class App {
         panelVenta.add(espaciador);
         panelVenta.add(btnRegistrarVenta);
         
-        // Área de información dinámica - SIN SCROLL
+        // Área de información dinámica
         JTextArea infoVenta = new JTextArea(3, 20);
         infoVenta.setEditable(false);
         infoVenta.setBackground(COLOR_FONDO_SECUNDARIO);
@@ -340,14 +340,14 @@ public class App {
         };
         
         actualizarInfo.run();
-        cbMedioPago.addActionListener(_ -> actualizarInfo.run());
+        cbMedioPago.addActionListener(e -> actualizarInfo.run());
         
         panelVenta.add(new JLabel());
         panelVenta.add(infoVenta);
 
         frame.add(panelVenta, BorderLayout.EAST);
 
-        btnRegistrarVenta.addActionListener(_ -> {
+        btnRegistrarVenta.addActionListener(e -> {
             String codigo = tfCodigoVenta.getText().trim();
             String cantidadStr = tfCantidadVenta.getText().trim();
             
@@ -368,7 +368,7 @@ public class App {
                 return;
             }
             
-            Producto prod = buscarProductoPorCodigo(codigo);
+            Producto prod = catalogo.buscarPorCodigo(codigo);
                 
             if (prod == null) {
                 mostrarError("Producto no encontrado");
@@ -376,8 +376,8 @@ public class App {
             }
             
             // Obtener stock actual y mínimo del producto
-            int stockActual = obtenerStockActual(prod);
-            int stockMinimo = obtenerStockMinimo(prod);
+            int stockActual = prod.getCantidadStock();
+            int stockMinimo = prod.getStockMinimo();
             
             // Verificar si hay stock suficiente
             if (!prod.chequearStock(cantidad)) {
@@ -385,7 +385,7 @@ public class App {
                 return;
             }
             
-            // NUEVA VALIDACIÓN: Verificar que después de la venta no quede por debajo del stock mínimo
+            //Verificar que después de la venta no quede por debajo del stock mínimo
             int stockDespuesVenta = stockActual - cantidad;
             if (stockDespuesVenta < stockMinimo) {
                 mostrarError("No se puede realizar la venta.\n" +
@@ -431,35 +431,6 @@ public class App {
             
             mostrarExito("Venta registrada exitosamente!");
         });
-    }
-
-    // Método auxiliar para buscar producto por código
-    private static Producto buscarProductoPorCodigo(String codigo) {
-        return catalogo.listarProductos().stream()
-            .filter(p -> p.toString().contains("Código: " + codigo + " "))
-            .findFirst().orElse(null);
-    }
-
-    // Método auxiliar para extraer el stock actual del toString del producto
-    private static int obtenerStockActual(Producto producto) {
-        String productoStr = producto.toString();
-        try {
-            String stockStr = productoStr.replaceAll(".*Stock: (\\d+).*", "$1");
-            return Integer.parseInt(stockStr);
-        } catch (Exception e) {
-            return 0;
-        }
-    }
-
-    // Método auxiliar para extraer el stock mínimo del toString del producto
-    private static int obtenerStockMinimo(Producto producto) {
-        String productoStr = producto.toString();
-        try {
-            String stockMinStr = productoStr.replaceAll(".*Stock mínimo: (\\d+)", "$1");
-            return Integer.parseInt(stockMinStr);
-        } catch (Exception e) {
-            return 0;
-        }
     }
 
     private static void mostrarExito(String mensaje) {
@@ -558,8 +529,8 @@ public class App {
                     return;
                 }
                 
-                // NUEVA VALIDACIÓN: Verificar si ya existe un producto con ese código
-                Producto productoExistente = buscarProductoPorCodigo(codigo);
+                //Verificar si ya existe un producto con ese código
+                Producto productoExistente = catalogo.buscarPorCodigo(codigo);
                 if (productoExistente != null) {
                     mostrarError("Ya existe un producto con el código: " + codigo + "\n" +
                                "No se pueden tener productos duplicados.\n" +
@@ -627,7 +598,7 @@ public class App {
                 }
                 
                 // Buscar el producto existente
-                Producto productoExistente = buscarProductoPorCodigo(codigo);
+                Producto productoExistente = catalogo.buscarPorCodigo(codigo);
                 if (productoExistente == null) {
                     mostrarError("No existe un producto con el código: " + codigo + "\n" +
                                "Verifique el código o use 'Agregar Producto' para crear uno nuevo.");
@@ -771,12 +742,12 @@ public class App {
             String stockMinStr = tfStockMin.getText().trim();
 
             List<Producto> filtrados = catalogo.listarProductos().stream()
-                .filter(p -> codigo.isEmpty() || p.toString().contains("Código: " + codigo + " "))
+                .filter(p -> codigo.isEmpty() || p.getCodigo().equals(codigo))
                 .filter(p -> descripcion.isEmpty() || 
                     p.toString().toLowerCase().contains(descripcion.toLowerCase()))
                 .filter(p -> filtrarPorPrecio(p, precioStr))
-                .filter(p -> filtrarPorStock(p, stockStr))
-                .filter(p -> filtrarPorStockMin(p, stockMinStr))
+                .filter(p -> stockStr.isEmpty() || p.getCantidadStock() == Integer.parseInt(stockStr))
+                .filter(p -> stockMinStr.isEmpty() || p.getStockMinimo() == Integer.parseInt(stockMinStr))
                 .collect(Collectors.toList());
 
             mostrarResultadoBusqueda(filtrados);
@@ -786,24 +757,6 @@ public class App {
             if (precioStr.isEmpty()) return true;
             try { 
                 return p.getPrecioUnitario() == Double.parseDouble(precioStr); 
-            } catch (NumberFormatException ex) { 
-                return false; 
-            }
-        }
-
-        private boolean filtrarPorStock(Producto p, String stockStr) {
-            if (stockStr.isEmpty()) return true;
-            try {
-                return p.toString().contains("Stock: " + Integer.parseInt(stockStr) + " ");
-            } catch (NumberFormatException ex) { 
-                return false; 
-            }
-        }
-
-        private boolean filtrarPorStockMin(Producto p, String stockMinStr) {
-            if (stockMinStr.isEmpty()) return true;
-            try {
-                return p.toString().contains("Stock mínimo: " + Integer.parseInt(stockMinStr));
             } catch (NumberFormatException ex) { 
                 return false; 
             }
