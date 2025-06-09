@@ -25,7 +25,6 @@ public class App {
     private static final Color COLOR_EXITO = new Color(46, 204, 113);
     private static final Color COLOR_PELIGRO = new Color(231, 76, 60);
     private static final Color COLOR_ADVERTENCIA = new Color(241, 196, 15);
-    private static final Color COLOR_INFORMACION = new Color(52, 152, 219);
     private static final Color COLOR_NARANJA = new Color(255, 143, 0);
     
     private static CatalogoProductos catalogo;
@@ -341,14 +340,14 @@ public class App {
         };
         
         actualizarInfo.run();
-        cbMedioPago.addActionListener(e -> actualizarInfo.run());
+        cbMedioPago.addActionListener(_ -> actualizarInfo.run());
         
         panelVenta.add(new JLabel());
         panelVenta.add(infoVenta);
 
         frame.add(panelVenta, BorderLayout.EAST);
 
-        btnRegistrarVenta.addActionListener(e -> {
+        btnRegistrarVenta.addActionListener(_ -> {
             String codigo = tfCodigoVenta.getText().trim();
             String cantidadStr = tfCantidadVenta.getText().trim();
             
