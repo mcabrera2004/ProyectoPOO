@@ -1,7 +1,6 @@
 package app;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import model.Producto;
@@ -14,15 +13,13 @@ import model.Venta;
 public class RegistrarVentaListener implements ActionListener {
     private final JTextField tfCodigoVenta, tfCantidadVenta;
     private final JComboBox<String> cbMedioPago;
-    private final JTextArea infoVenta;
     private final JTextArea areaProductos;
     private final JFrame frame;
 
-    public RegistrarVentaListener(JTextField tfCodigoVenta, JTextField tfCantidadVenta, JComboBox<String> cbMedioPago, JTextArea infoVenta, JTextArea areaProductos, JFrame frame) {
+    public RegistrarVentaListener(JTextField tfCodigoVenta, JTextField tfCantidadVenta, JComboBox<String> cbMedioPago, JTextArea areaProductos, JFrame frame) {
         this.tfCodigoVenta = tfCodigoVenta;
         this.tfCantidadVenta = tfCantidadVenta;
         this.cbMedioPago = cbMedioPago;
-        this.infoVenta = infoVenta;
         this.areaProductos = areaProductos;
         this.frame = frame;
     }
@@ -108,7 +105,6 @@ public class RegistrarVentaListener implements ActionListener {
 
         tfCodigoVenta.setText("");
         tfCantidadVenta.setText("");
-
-        JOptionPane.showMessageDialog(frame, "Venta registrada exitosamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        // Se eliminó el JOptionPane de éxito
     }
 }

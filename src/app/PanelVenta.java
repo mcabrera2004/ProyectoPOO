@@ -1,11 +1,12 @@
 package app;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.Font;
+import java.awt.Dimension;
 
 public class PanelVenta extends JPanel {
     public PanelVenta(JFrame frame, JTextArea areaProductos) {
-        setLayout(new GridLayout(6, 2, 10, 10));
+        setLayout(new java.awt.GridLayout(6, 2, 10, 10));
         setBackground(App.COLOR_FONDO_SECUNDARIO);
         setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(App.COLOR_ACENTO, 2),
@@ -49,11 +50,11 @@ public class PanelVenta extends JPanel {
 
         add(new JLabel()); add(infoVenta);
 
-        // --- CORRECCIÓN: Actualizar infoVenta según el medio de pago seleccionado ---
+        // Actualizar infoVenta según el medio de pago seleccionado
         cbMedioPago.addActionListener(e -> {
             String medio = (String) cbMedioPago.getSelectedItem();
             String texto = "";
-            Color colorBorde = App.COLOR_ADVERTENCIA;
+            java.awt.Color colorBorde = App.COLOR_ADVERTENCIA;
 
             switch (medio) {
                 case "Efectivo":
@@ -89,8 +90,9 @@ public class PanelVenta extends JPanel {
         cbMedioPago.setSelectedIndex(0);
         cbMedioPago.getActionListeners()[0].actionPerformed(null);
 
+        // Ajusta el constructor del listener (sin infoVenta)
         btnRegistrarVenta.addActionListener(
-            new RegistrarVentaListener(tfCodigoVenta, tfCantidadVenta, cbMedioPago, infoVenta, areaProductos, frame)
+            new RegistrarVentaListener(tfCodigoVenta, tfCantidadVenta, cbMedioPago, areaProductos, frame)
         );
     }
 }
