@@ -41,13 +41,11 @@ public class Producto {
     
     @Override
     public String toString() {
-        return "Producto{" +
-               "codigo='" + codigo + '\'' +
-               ", descripcion='" + descripcion + '\'' +
-               ", precioUnitario=" + precioUnitario +
-               ", cantidadStock=" + cantidadStock +
-               ", stockMinimo=" + stockMinimo +
-               '}';
+        return "Código: " + codigo +
+            " | Descripción: " + descripcion +
+            " | Precio: $" + precioUnitario +
+            " | Stock: " + cantidadStock +
+            " | Stock mínimo: " + stockMinimo;
     }
 }
 
