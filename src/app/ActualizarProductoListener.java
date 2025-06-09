@@ -88,8 +88,6 @@ public class ActualizarProductoListener implements ActionListener {
             tfStock.setText("");
             tfStockMin.setText("");
 
-            // Se eliminó el JOptionPane de éxito
-
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(frame, "Por favor ingrese valores numéricos válidos", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {

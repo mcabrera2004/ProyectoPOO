@@ -105,6 +105,5 @@ public class RegistrarVentaListener implements ActionListener {
 
         tfCodigoVenta.setText("");
         tfCantidadVenta.setText("");
-        // Se eliminó el JOptionPane de éxito
     }
 }

@@ -90,7 +90,6 @@ public class PanelVenta extends JPanel {
         cbMedioPago.setSelectedIndex(0);
         cbMedioPago.getActionListeners()[0].actionPerformed(null);
 
-        // Ajusta el constructor del listener (sin infoVenta)
         btnRegistrarVenta.addActionListener(
             new RegistrarVentaListener(tfCodigoVenta, tfCantidadVenta, cbMedioPago, areaProductos, frame)
         );
